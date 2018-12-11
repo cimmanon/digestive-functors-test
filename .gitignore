@@ -1,0 +1,12 @@
+cabal.sandbox.config
+\.cabal\-sandbox
+dist/
+\.sass\-cache
+log/
+snaplets/postgresql-simple/
+site_key\.txt
+\.ghci
+dumps/
+dist
+dist-*
+*.local

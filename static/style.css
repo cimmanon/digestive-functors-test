@@ -1,0 +1,9 @@
+span.success {
+	font-weight: bold;
+	color: green;
+}
+
+span.failure {
+	font-weight: bold;
+	color: red;
+}
