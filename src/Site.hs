@@ -36,20 +36,25 @@ import Form.GroupBool
 ----------------------------------------------------------------------
 
 digestiveSplicesCustom :: (Monad m, MonadIO m) => View T.Text -> Splices (Splice m)
-digestiveSplicesCustom v = do
-	digestiveSplices v
-	"dfSubView" ## dfSubView digestiveSplicesCustom v
-	"dfInputList" ## dfInputListCustom digestiveSplicesCustom v
-	"dfListGroup" ## dfListGroup digestiveSplicesCustom v
-	"dfShowView" ## dfShowView v
-	"dfIfEnabled" ## dfIfEnabled v
-	"dfIfDisabled" ## dfIfDisabled v
+digestiveSplicesCustom = digestiveSplicesWith customSplices
+	where
+		--customSplices :: (Monad m) => AppendableSplice m
+		customSplices s v = do
+			let
+				nextSplices = addSplices customSplices s
+			"dfSubView" ## dfSubView nextSplices v
+			"dfInputList" ## dfInputListCustom nextSplices v
+			"dfListGroup" ## dfListGroup nextSplices v
+			"dfShowView" ## dfShowView v
+			"dfIfEnabled" ## dfIfEnabled v
+			"dfIfDisabled" ## dfIfDisabled v
 
-dfListGroup :: Monad m => (View T.Text -> Splices (Splice m)) -> View T.Text -> Splice m
+
+dfListGroup :: Monad m => AppendableSplice m -> View T.Text -> Splice m
 dfListGroup splices view =
 	let
-		splices' v = do
-			splices v
+		splices' s v = do
+			splices s v
 			"dfGroupRadioChoice" ## dfGroupRadioChoice view v
 			"dfGroupRadioText" ## dfGroupRadioText view v
 	in
