@@ -42,18 +42,7 @@ digestiveSplicesCustom v = do
 	"dfShowView" ## dfShowView v
 	"dfIfEnabled" ## dfIfEnabled v
 	"dfIfDisabled" ## dfIfDisabled v
-{-
-digestiveSplicesCustom :: (Monad m, MonadIO m) => View T.Text -> Splices (Splice m)
-digestiveSplicesCustom = digestiveSplicesWith customSplices
-	where
---		customSplices :: Monad m => Splices (AppendableSplice m -> View T.Text -> Splice m)
-		customSplices = do
-			"dfInputList" ## dfInputListCustom
-			"dfSubView" ## dfSubView
-			"dfShowView" ## const dfShowView
-			"dfIfEnabled" ## const dfIfEnabled
-			"dfIfDisabled" ## const dfIfDisabled
--}
+
 ------------------------------------------------------------------------------
 -- | The application's routes.
 
