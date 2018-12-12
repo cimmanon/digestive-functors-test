@@ -10,6 +10,8 @@
 
 				<bind tag="listItem">
 					<apply template="_test_item" />
+					<br />
+					dfDebugIndex: <dfDebugIndex />, should be <dfListItemIndex />
 				</bind>
 
 				<dfListItem>

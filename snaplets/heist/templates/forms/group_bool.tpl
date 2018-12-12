@@ -7,6 +7,10 @@
 		<dfSubView ref="group-bool">
 			<bind tag="listItem">
 				<apply template="_test_item" />
+				<br />
+				<dfDebugShowView />
+				should be
+				<dfShowView />
 			</bind>
 
 			<table border="1">
