@@ -56,17 +56,22 @@ digestiveSplicesCustom = digestiveSplicesWith customSplices
 -}
 ------------------------------------------------------------------------------
 -- | The application's routes.
+
 routes :: [(ByteString, Handler App App ())]
 routes =
 	[ ("/", ifTop $ render "index")
 	-- NestedList
 	, ("/nested-list/empty", renderFormH "forms/nested_list" nestedListForm Nothing)
-	, ("/nested-list/populated", renderFormH "forms/nested_list" nestedListForm $ Just
-		[ (TestItem "foo" "one", [TestItem "foo" "one", TestItem "bar" "two"])
-		, (TestItem "bar" "two", [TestItem "foo" "one"])
-		, (TestItem "buzz" "three", [])
-		])
+	, ("/nested-list/populated", renderFormH "forms/nested_list" nestedListForm $ Just $
+		zip testItems [take 2 testItems, take 1 testItems, []])
 	, ("", serveDirectory "static")
+	]
+
+testItems :: [TestItem]
+testItems =
+	[ (TestItem "foo" "one")
+	, (TestItem "bar" "two")
+	, (TestItem "buzz" "three")
 	]
 
 ----------------------------------------------------------------------
