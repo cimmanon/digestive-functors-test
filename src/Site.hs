@@ -31,6 +31,7 @@ import Text.Digestive.Snap (runForm)
 
 import Form.TestItem (TestItem(..))
 import Form.NestedList
+import Form.GroupBool
 
 ----------------------------------------------------------------------
 
@@ -39,9 +40,20 @@ digestiveSplicesCustom v = do
 	digestiveSplices v
 	"dfSubView" ## dfSubView digestiveSplicesCustom v
 	"dfInputList" ## dfInputListCustom digestiveSplicesCustom v
+	"dfListGroup" ## dfListGroup digestiveSplicesCustom v
 	"dfShowView" ## dfShowView v
 	"dfIfEnabled" ## dfIfEnabled v
 	"dfIfDisabled" ## dfIfDisabled v
+
+dfListGroup :: Monad m => (View T.Text -> Splices (Splice m)) -> View T.Text -> Splice m
+dfListGroup splices view =
+	let
+		splices' v = do
+			splices v
+			"dfGroupRadioChoice" ## dfGroupRadioChoice view v
+			"dfGroupRadioText" ## dfGroupRadioText view v
+	in
+		dfInputListCustom splices' view
 
 ------------------------------------------------------------------------------
 -- | The application's routes.
@@ -53,6 +65,10 @@ routes =
 	, ("/nested-list/empty", renderFormH "forms/nested_list" nestedListForm Nothing)
 	, ("/nested-list/populated", renderFormH "forms/nested_list" nestedListForm $ Just $
 		zip testItems [take 2 testItems, take 1 testItems, []])
+	-- GroupBool
+	, ("/group-bool/empty", renderFormH "forms/group_bool" groupBoolForm Nothing)
+	, ("/group-bool/populated", renderFormH "forms/group_bool" groupBoolForm  $ Just $
+		zip testItems [False, True, True])
 	, ("", serveDirectory "static")
 	]
 
