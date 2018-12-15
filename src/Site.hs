@@ -23,7 +23,6 @@ import Application
 
 import Control.Monad.IO.Class (MonadIO)
 import Text.Digestive
-import Text.Digestive.Heist (digestiveSplices)
 import Text.Digestive.Heist.Extras
 import Text.Digestive.Heist.Extras.Conditional (dfIfEnabled, dfIfDisabled)
 import Text.Digestive.Heist.Extras.Debug (dfShowView)
@@ -38,7 +37,7 @@ import Form.GroupBool
 digestiveSplicesCustom :: (Monad m, MonadIO m) => View T.Text -> Splices (Splice m)
 digestiveSplicesCustom = digestiveSplicesWith customSplices
 	where
---		customSplices :: Monad m => Splices (AppendableSplice m -> View T.Text -> Splice m)
+--		customSplices :: Monad m => Splices (AppendableSplices m -> View T.Text -> Splice m)
 		customSplices = do
 			"dfSubView" ## dfSubView
 			"dfInputList" ## dfInputListCustom
@@ -48,7 +47,7 @@ digestiveSplicesCustom = digestiveSplicesWith customSplices
 			"dfIfDisabled" ## const dfIfDisabled
 
 
-dfListGroup :: Monad m => AppendableSplice m -> View T.Text -> Splice m
+dfListGroup :: Monad m => AppendableSplices m -> View T.Text -> Splice m
 dfListGroup splices view =
 	let
 		splices' s v = do
